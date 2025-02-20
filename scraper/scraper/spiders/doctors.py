@@ -72,10 +72,13 @@ class DoctorsSpider(scrapy.Spider):
         for lines in data:
             lines = lines.text.split("\n")
             for i in range(0, len(lines), 4):
-                date = lines[i].strip()
-                start_time = lines[i+1].replace("From", "").strip()
-                end_time = lines[i+2].replace("To", "").strip()
-                appointments.append(f"{date} {start_time} - {end_time}")
+                try:
+                    date = lines[i].strip()
+                    start_time = lines[i+1].replace("From", "").strip()
+                    end_time = lines[i+2].replace("To", "").strip()
+                    appointments.append(f"{date} {start_time} - {end_time}")
+                except:
+                    continue
 
         return "\n".join(appointments)
 
